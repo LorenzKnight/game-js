@@ -12,6 +12,9 @@ function initCanvas(){
     enemiespic1.src     = "images/enemigo1.png";
     enemiespic2.src     = "images/enemigo2.png"; //Enemies picture
     
+    var gameContainer = document.getElementById('game-container')
+    gameContainer.scrollTo(200, 0)
+
     // width and height (canvas)
     var cW = ctx.canvas.width; // 700px 
     var cH = ctx.canvas.height;// 600px
@@ -58,7 +61,7 @@ function initCanvas(){
     // This also forces enemies to check if THEY are hitting the player 
     var renderEnemies = function (enemyList) {
         for (var i = 0; i < enemyList.length; i++) {
-            console.log(enemyList[i]);
+            // console.log(enemyList[i]);
             ctx.drawImage(enemyList[i].image, enemyList[i].x, enemyList[i].y += .5, enemyList[i].w, enemyList[i].h);
             // Detects when ships hit lower level
             launcher.hitDetectLowerLevel(enemyList[i]);
@@ -68,7 +71,7 @@ function initCanvas(){
     function Launcher(){
         // bullet location (ubicación de balas)
         this.y = 500, 
-        this.x = cW*.5-25, 
+        this.x = 820, 
         this.w = 100, 
         this.h = 100,   
         this.direccion, 
@@ -140,7 +143,7 @@ function initCanvas(){
             // this.y -> where is spaceship location
             if(enemy.id === 'enemy3'){
                 //console.log(this.y);
-                console.log(this.x);
+                //console.log(this.x);
             }
             // a) If enemy y is greater than this.y - 25 => then we know there's a collision
             // b) If enemy x is gless than this.x + 45 && enemy x > this.x - 45 then we know theres a collision
@@ -173,6 +176,7 @@ function initCanvas(){
     var fire_btn  = document.getElementById('fire_btn'); 
 
    document.addEventListener('keydown', function(event) {
+       console.log(event.code)
         if(event.keyCode == 37) // left arrow
         {
          launcher.direccion = 'left';  
