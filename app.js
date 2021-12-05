@@ -12,11 +12,14 @@ function initCanvas(){
     enemiespic1.src     = "images/enemigo1.png";
     enemiespic2.src     = "images/enemigo2.png"; //Enemies picture
     
+
     var gameContainer = document.getElementById('game-container')
-    gameContainer.scrollTo(200, 0)
+    const initScrollX = 175
+    const initScrollY = 0
+    gameContainer.scrollTo(initScrollX, initScrollY)
 
     // width and height (canvas)
-    var cW = ctx.canvas.width; // 700px 
+    var cW = ctx.canvas.width; // 700px (1400px)
     var cH = ctx.canvas.height;// 600px
 
     // template for naves
@@ -71,9 +74,12 @@ function initCanvas(){
     function Launcher(){
         // bullet location (ubicación de balas)
         this.y = 500, 
-        this.x = 820, 
+        this.x = 640, 
         this.w = 100, 
-        this.h = 100,   
+        this.h = 100,
+        this.scrollX = 175
+        this.scrollY = 0
+        
         this.direccion, 
         this.bg="white", // bullet color (color de bala)
         this.misiles = [];
@@ -85,12 +91,29 @@ function initCanvas(){
             fillStyle: 'red',
             font: 'italic bold 36px Arial, sans-serif',
         }
-
+        /**
+         * initR = 825 - 175 = 650, kmr stiga ju mer åt höger man går
+         * initL = 825 + 175 = 1000, kmr minska, ju mer åt vänsterr man går
+         */
         this.render = function () {
             if(this.direccion === 'left'){
                 this.x-=5;
+                console.log("x: " + this.x)
+                if (this.x - this.scrollX < 950) {
+                    
+                    console.log("Scrollx: " + this.scrollX)
+                    this.scrollX -= 5
+                    gameContainer.scrollTo(this.scrollX, this.scrollY)
+                }
             } else if(this.direccion === 'right'){
                 this.x+=5;
+                console.log("x: " + this.x)
+                if (this.x - this.scrollX > 700) {
+                    
+                    console.log("Scrollx: " + this.scrollX)
+                    this.scrollX += 5
+                    gameContainer.scrollTo(this.scrollX, this.scrollY)
+                }
             }else if(this.direccion === "downArrow"){
                 this.y+=5;
             }else if(this.direccion === "upArrow"){
@@ -118,7 +141,7 @@ function initCanvas(){
         }
         // Detectar impacto de bullet (bala)
         this.hitDetect = function (m, mi) {
-            console.log('crush');
+            //console.log('crush');
             for (var i = 0; i < enemies.length; i++) {
                 var e = enemies[i];
                 if(m.x+m.w >= e.x && 
@@ -176,13 +199,15 @@ function initCanvas(){
     var fire_btn  = document.getElementById('fire_btn'); 
 
    document.addEventListener('keydown', function(event) {
-       console.log(event.code)
+       //console.log(event.code)
         if(event.keyCode == 37) // left arrow
         {
-         launcher.direccion = 'left';  
-            if(launcher.x < cW*.2-130){
+         
+            if(launcher.x < cW - 1300){
                 launcher.x+=0;
                 launcher.direccion = '';
+            } else {
+                launcher.direccion = 'left';  
             }
        }    
     });
@@ -198,10 +223,12 @@ function initCanvas(){
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 39) // right arrow
         {
-         launcher.direccion = 'right';
+         
          if(launcher.x > cW-110){
             launcher.x-=0;
             launcher.direccion = '';
+         } else {
+            launcher.direccion = 'right';
          }
         
         }

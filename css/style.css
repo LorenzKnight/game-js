@@ -2,31 +2,34 @@ body {
   margin:10px; 
   background-image: url("../images/wall.jpg"); 
   min-height: 99.99vh;
+
 }
 
 .container {
-  width:800px;
+
   margin:0 auto;
   min-height: 99.99vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #game-container {
   max-width: 700px;
   height: 600px;
-  -ms-overflow-style: none; 
-  scrollbar-width: none;  
+  /* -ms-overflow-style: none; 
+  scrollbar-width: none;   */
   overflow: scroll;
   position: relative;
   bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* flex-direction: column; */
 }
 
-#game-container::-webkit-scrollbar {
+/* #game-container::-webkit-scrollbar {
   display: none;
-}
+} */
 .barra {
   background-color:#000000;
   color: #ffffff;
